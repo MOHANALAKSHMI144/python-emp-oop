@@ -1,0 +1,87 @@
+class Employee(ABC):
+    """Base class for all employees."""
+
+    def __init__(self, employee_id, name, department):
+        print("__init__ of Employee")
+        self._employee_id = employee_id
+        self._name = name
+        self._department = department
+
+    @abstractmethod
+    def calculate_salary(self):
+        """Abstract method to calculate salary."""
+        pass
+
+    def display_details(self):
+        """Displays employee details."""
+        print("--- Employee Details ---")
+        print(f"Employee ID: {self._employee_id}")
+        print(f"Name: {self._name}")
+        print(f"Department: {self._department}")
+
+class PermanentEmployee(Employee):
+    """Represents a permanent employee."""
+
+    def __init__(self, employee_id, name, department, basic_salary, bonus):
+        print("__init__ of PermanentEmployee")
+        super().__init__(employee_id, name, department)
+        self._basic_salary = basic_salary
+        self._bonus = bonus
+
+    def calculate_salary(self):
+        """Calculates salary for permanent employees."""
+        return self._basic_salary + self._bonus
+
+    def display_details(self):
+        """Displays details for permanent employees."""
+        super().display_details()
+        print(f"Basic Salary: ${self._basic_salary:.2f}")
+        print(f"Bonus: ${self._bonus:.2f}")
+        print(f"Total Salary: ${self.calculate_salary():.2f}")
+
+class ContractEmployee(Employee):
+    """Represents a contract employee."""
+
+    def __init__(self, employee_id, name, department, hourly_rate, hours_worked):
+        print("__init__ of ContractEmployee")
+        super().__init__(employee_id, name, department)
+        self._hourly_rate = hourly_rate
+        self._hours_worked = hours_worked
+
+    def calculate_salary(self):
+        """Calculates salary for contract employees."""
+        return self._hourly_rate * self._hours_worked
+
+    def display_details(self):
+        """Displays details for contract employees."""
+        super().display_details()
+        print(f"Hourly Rate: ${self._hourly_rate:.2f}")
+        print(f"Hours Worked: {self._hours_worked}")
+        print(f"Total Salary: ${self.calculate_salary():.2f}")
+
+class Intern(Employee):
+    """Represents an intern."""
+
+    def __init__(self, employee_id, name, department, stipend):
+        print("__init__ of Intern")
+        super().__init__(employee_id, name, department)
+        self._stipend = stipend
+
+    def calculate_salary(self):
+        """Calculates salary for interns."""
+        return self._stipend
+
+    def display_details(self):
+        """Displays details for interns."""
+        super().display_details()
+        print(f"Stipend: ${self._stipend:.2f}")
+        print(f"Total Salary: ${self.calculate_salary():.2f}")
+
+# Sample usage
+alice = PermanentEmployee("P123", "Alice Johnson", "IT", 60000, 5000)
+bob = ContractEmployee("C456", "Bob Smith", "HR", 50, 160)
+charlie = Intern("I789", "Charlie Brown", "Finance", 1500)
+
+alice.display_details()
+bob.display_details()
+charlie.display_details()
